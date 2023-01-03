@@ -43,5 +43,6 @@ for item in codes:
 for item in data:
     if len(item) > minlength:
         item = item[0:minlength]
-rf = float(input('请输入无风险收益率:'))
+# rf = float(input('请输入无风险收益率:'))
+rf = ak.bond_zh_us_rate().values[-1][2] / 100
 print(find(rf,data))
