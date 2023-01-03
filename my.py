@@ -1,5 +1,6 @@
 import numpy as np
-def find(rf,*list):
+import akshare as ak
+def find(rf,list):
     l=len(list)
     if l==0:return
     er=np.array([np.average(i) for i in list])
@@ -19,5 +20,19 @@ def find(rf,*list):
             elif np.exp((nsharp-sharp)/T)<np.random.random():
                 w[pos]-=dw
             T*=0.993
-    return [otc,sharp]
-print(find(0.02,(1,1,1,2),(2,3,4,5),(2,5,3,4)))
+    return otc,sharp
+
+def fetchData(code='sz399552'):
+    stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol="sz399552")
+    data = []
+    for item in stock_zh_index_daily_df.values:
+        print((item[4]-item[1])/item[1])
+        data.append((item[4]-item[1])/item[1])  # 求日收益率
+    return data
+
+data = []
+codes = input().split()
+for item in codes:
+    data.append(fetchData(item))
+rf = float(input('请输入无风险收益率:'))
+print(find(rf,data))
