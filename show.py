@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from my import find,fetchData,findrf
+from my import *
 class service():
     def confirm():
         solve().main.transient()
