@@ -32,12 +32,14 @@ def fetchData(code='sz399552'):
 
 data = []
 length = []
+minlength = 999
 codes = input().split()
 for item in codes:
     temp = fetchData(item)
     data.append(temp)
-    length.append(len(temp))
-minlength = min(length)
+    if len(temp) < minlength:
+        minlength = len(temp)
+
 for item in data:
     if len(item) > minlength:
         item = item[0:minlength]
