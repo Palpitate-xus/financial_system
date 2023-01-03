@@ -1,6 +1,5 @@
 import numpy as np
-import akshare as ak
-import show
+#import akshare as ak
 def find(rf,list):
     l=len(list)
     if l==0:return
@@ -32,6 +31,3 @@ def fetchData(code='sz399552'):
     return data
 def findrf():
     return ak.bond_zh_us_rate().values[-1][2] / 100
-
-if __name__=='__main__':
-    show.service.main.mainloop()

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from my import find,fetchData,findrf
+import my
 class service():
     def confirm():
         solve().main.transient()
@@ -45,20 +45,24 @@ class solve():
         datalist,minlen=[],800
         try:
             for code in service.exch.get(0.1,'end').split():
-                datalist.append(fetchData(code))
+                datalist.append(my.fetchData(code))
+            if not datalist:exit(0)
         except:
             print('illegal input!\n')
             self.main.destroy()
-        for dataseq in datalist:
-            minlen=min(minlen,len(dataseq))
+            return
+        minlen=min(len(item) for item in datalist)
         if minlen<36:
-            print('sorry,but too less data was found, please change the combination\n')
+            print('sorry but too less data was found, please change the combination\n')
             self.main.destroy()
+            return
+        datalist=list(map(lambda x:x[:minlen],datalist))
         try:
-            ans=find(findrf(),datalist)
+            ans=my.find(my.findrf(),datalist)
         except:
             print('unknown calculation fault!\n')
             self.main.destroy()
+            return
         self.otc='SharpRatio='+ans[1]+'\n'
         for w in ans[0]:
             self.otc+=w+'\n'
@@ -71,4 +75,4 @@ class solve():
         tk.Button(self.main,font=('times',12),text='确定',command=confirm).place(x=120,y=585,width=50,height=30)
         tk.Button(self.main,font=('times',12),text='保存到文件',command=savefile).place(x=270,y=585,width=100,height=30)
 if __name__=='__main__':
-    service.main.mainloop()
+    service().main.mainloop()
