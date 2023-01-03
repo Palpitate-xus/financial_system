@@ -23,7 +23,7 @@ def find(rf,list):
     return otc,sharp
 
 def fetchData(code='sz399552'):
-    stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol="sz399552")
+    stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol=code)
     data = []
     for item in stock_zh_index_daily_df.values:
         print((item[4]-item[1])/item[1])
@@ -31,8 +31,15 @@ def fetchData(code='sz399552'):
     return data
 
 data = []
+length = []
 codes = input().split()
 for item in codes:
-    data.append(fetchData(item))
+    temp = fetchData(item)
+    data.append(temp)
+    length.append(len(temp))
+minlength = min(length)
+for item in data:
+    if len(item) > minlength:
+        item = item[0:minlength]
 rf = float(input('请输入无风险收益率:'))
 print(find(rf,data))
