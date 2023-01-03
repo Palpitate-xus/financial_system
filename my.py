@@ -1,5 +1,6 @@
 import numpy as np
 import akshare as ak
+import show
 def find(rf,list):
     l=len(list)
     if l==0:return
@@ -29,20 +30,8 @@ def fetchData(code='sz399552'):
         print((item[4]-item[1])/item[1])
         data.append((item[4]-item[1])/item[1])  # 求日收益率
     return data
+def findrf():
+    return ak.bond_zh_us_rate().values[-1][2] / 100
 
-data = []
-length = []
-minlength = 999
-codes = input().split()
-for item in codes:
-    temp = fetchData(item)
-    data.append(temp)
-    if len(temp) < minlength:
-        minlength = len(temp)
-
-for item in data:
-    if len(item) > minlength:
-        item = item[0:minlength]
-# rf = float(input('请输入无风险收益率:'))
-rf = ak.bond_zh_us_rate().values[-1][2] / 100
-print(find(rf,data))
+if __name__=='__main__':
+    show.service.main.mainloop()
