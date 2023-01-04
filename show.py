@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from my import *
+import my
 class service():
     def confirm():
         solve().main.transient()
