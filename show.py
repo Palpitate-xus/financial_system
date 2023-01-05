@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog,messagebox
 import tool
+import traceback
 otc=''
 class service():
     def confirm():
@@ -22,6 +23,7 @@ class service():
         try:
             ans=tool.find(tool.findrf(),datalist,namelist)
         except:
+            traceback.print_exc()
             messagebox.showerror(title='Error',message='unknown calculation error')
             return
         global otc
