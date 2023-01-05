@@ -1,2 +1,4 @@
-import akshare as ak
-print(ak.bond_zh_us_rate().values[-1][2] / 100)
+list1 = [2]
+for item in list1:
+    item=1
+print(list1)
