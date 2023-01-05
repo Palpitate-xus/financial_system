@@ -7,7 +7,7 @@ def findrf():
     return ak.bond_zh_us_rate().values[-1][2] / 100
 
 # 获取股票数据
-def fetchData(code='sz399552'):
+def fetchData(code='sh000001'):
     field_name = ak.stock_individual_info_em(symbol=code[2:8]).values[2][1]
     stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol=code)
     data = []
