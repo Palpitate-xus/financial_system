@@ -61,5 +61,5 @@ def find(rf,list,namelist):
     cov = np.array([[cov[i][j] * otc[i] * otc[j] for i in range(l)] for j in range(l)])
     return otc, sharp, np.sum(rep * cov) / np.sum(cov)
 
-print(find(findrf(), [[0.02, 0.03],[0.04, 0.05]], ['test', 'new']))
-print(fetchData()[1])
+# print(find(findrf(), [[0.02, 0.03],[0.04, 0.05]], ['test', 'new']))
+# print(fetchData()[1])

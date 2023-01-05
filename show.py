@@ -47,7 +47,7 @@ class solve():
         datalist,minlen=[],800
         try:
             for code in service.exch.get(0.1,'end').split():
-                datalist.append(tool.fetchData(code))
+                datalist.append(tool.fetchData(code)[0])
             if not datalist:exit(0)
         except:
             messagebox.showerror(title='Error',message='error input')
