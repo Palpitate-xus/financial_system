@@ -58,21 +58,21 @@ class solve():
         if minlen<36:
             messagebox.showinfo(title='info',message='too less sample was found')
             return
-        datalist[0]=list(map(lambda x:x[:minlen],datalist))
+        datalist=list(map(lambda x:x[:minlen],datalist))
         try:
             ans=tool.find(tool.findrf(),datalist,namelist)
         except:
             messagebox.showerror(title='Error',message='unknown calculation error')
             return
-        self.otc='SharpRatio='+ans[1]+'\n'+'dispersity='+ans[2]+'\n'
+        self.otc='SharpRatio='+str(ans[1])+'\n'+'dispersity='+str(ans[2])+'\n'
         for w in ans[0]:
-            self.otc+=w+'\n'
+            self.otc+=str(w)+'\n'
         show=tk.Text(self.main,font=('times',12),state='disabled')
         show.place(x=0,y=0,width=480,height=560)
         sc=tk.Scrollbar(show,command=show.yview)
         sc.pack(side='right',fill='y')
         show.config(yscrollcommand=sc.set)
-        show.insert(self.otc)
+        show.insert(0.1, self.otc)
         tk.Button(self.main,font=('times',12),text='确定',command=confirm).place(x=120,y=585,width=50,height=30)
         tk.Button(self.main,font=('times',12),text='保存到文件',command=savefile).place(x=270,y=585,width=100,height=30)
 if __name__=='__main__':
