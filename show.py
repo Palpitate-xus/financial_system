@@ -1,11 +1,34 @@
 import tkinter as tk
 from tkinter import filedialog,messagebox
 import tool
+otc=''
 class service():
     def confirm():
-        tem=solve()
-        tem.main.transient()
-        tem.main.destroy()
+        datalist,namelist,minlen=[],[],800
+        try:
+            for code in service.exch.get(0.1,'end').split():
+                tem=tool.fetchData(code)
+                datalist.append(tem[0])
+                namelist.append(tem[1])
+            if not datalist:exit(0)
+        except:
+            messagebox.showerror(title='Error',message='error input')
+            return
+        minlen=min(len(item) for item in datalist)
+        if minlen<36:
+            messagebox.showinfo(title='info',message='too less sample was found')
+            return
+        datalist=list(map(lambda x:x[:minlen],datalist))
+        try:
+            ans=tool.find(tool.findrf(),datalist,namelist)
+        except:
+            messagebox.showerror(title='Error',message='unknown calculation error')
+            return
+        global otc
+        otc='SharpRatio='+str(ans[1])+'\n'+'dispersity='+str(ans[2])+'\n'
+        for w in ans[0]:
+            otc+=str(w)+'\n'
+        solve().main.transient()
     def readfile():
         path=filedialog.askopenfilename()
         xx=open(path,'r')
@@ -38,41 +61,18 @@ class solve():
         def savefile():
             path=filedialog.asksaveasfilename()
             xx=open(path,'a+')
-            xx.write(self.otc)
+            xx.write(otc)
             xx.close()
         self.main=tk.Toplevel()
         self.main.title('计算结果')
         self.main.resizable(0,0)
         self.main.geometry('480x640+500+100')
-        datalist,namelist,minlen=[],[],800
-        try:
-            for code in service.exch.get(0.1,'end').split():
-                tem=tool.fetchData(code)
-                datalist.append(tem[0])
-                namelist.append(tem[1])
-            if not datalist:exit(0)
-        except:
-            messagebox.showerror(title='Error',message='error input')
-            return
-        minlen=min(len(item) for item in datalist)
-        if minlen<36:
-            messagebox.showinfo(title='info',message='too less sample was found')
-            return
-        datalist=list(map(lambda x:x[:minlen],datalist))
-        try:
-            ans=tool.find(tool.findrf(),datalist,namelist)
-        except:
-            messagebox.showerror(title='Error',message='unknown calculation error')
-            return
-        self.otc='SharpRatio='+str(ans[1])+'\n'+'dispersity='+str(ans[2])+'\n'
-        for w in ans[0]:
-            self.otc+=str(w)+'\n'
-        show=tk.Text(self.main,font=('times',12),state='disabled')
+        show=tk.Text(self.main,font=('times',12))
         show.place(x=0,y=0,width=480,height=560)
         sc=tk.Scrollbar(show,command=show.yview)
         sc.pack(side='right',fill='y')
-        show.config(yscrollcommand=sc.set)
-        show.insert(0.1, self.otc)
+        show.insert(0.1,otc)
+        show.config(state='disabled',yscrollcommand=sc.set)
         tk.Button(self.main,font=('times',12),text='确定',command=confirm).place(x=120,y=585,width=50,height=30)
         tk.Button(self.main,font=('times',12),text='保存到文件',command=savefile).place(x=270,y=585,width=100,height=30)
 if __name__=='__main__':
