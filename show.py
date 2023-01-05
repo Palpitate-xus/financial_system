@@ -1,9 +1,11 @@
 import tkinter as tk
-from tkinter import filedialog
-import tool
+from tkinter import filedialog,messagebox
+#import tool
 class service():
     def confirm():
-        solve().main.transient()
+        tem=solve()
+        tem.main.transient()
+        tem.main.destroy()
     def readfile():
         path=filedialog.askopenfilename()
         xx=open(path,'r')
@@ -48,20 +50,17 @@ class solve():
                 datalist.append(tool.fetchData(code))
             if not datalist:exit(0)
         except:
-            print('illegal input!\n')
-            self.main.destroy()
+            messagebox.showerror(title='Error',message='error input')
             return
-        minlen=min(len(item) for item in datalist)
+        minlen=min(len(item) for item in datalist[0])
         if minlen<36:
-            print('sorry but too less data was found, please change the combination\n')
-            self.main.destroy()
+            messagebox.showinfo(title='info',message='too less sample was found')
             return
-        datalist=list(map(lambda x:x[:minlen],datalist))
+        datalist[0]=list(map(lambda x:x[:minlen],datalist[0]))
         try:
-            ans=tool.find(tool.findrf(),datalist)
+            ans=tool.find(tool.findrf(),datalist[0],datalist[1])
         except:
-            print('unknown calculation fault!\n')
-            self.main.destroy()
+            messagebox.showerror(title='Error',message='unknown calculation error')
             return
         self.otc='SharpRatio='+ans[1]+'\n'+'dispersity='+ans[2]+'\n'
         for w in ans[0]:
