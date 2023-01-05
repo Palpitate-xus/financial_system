@@ -1,4 +1,4 @@
-list1 = [2]
-for item in list1:
-    item=1
-print(list1)
+import akshare as ak
+
+stock_zh_a_spot_em_df = ak.stock_zh_a_spot_em()
+print(stock_zh_a_spot_em_df)
