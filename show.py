@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog,messagebox
-import tool
+#import tool
 class service():
     def confirm():
         tem=solve()
@@ -44,21 +44,23 @@ class solve():
         self.main.title('计算结果')
         self.main.resizable(0,0)
         self.main.geometry('480x640+500+100')
-        datalist,minlen=[],800
+        datalist,namelist,minlen=[],[],800
         try:
             for code in service.exch.get(0.1,'end').split():
-                datalist.append(tool.fetchData(code))
+                tem=tool.fetchData(code)
+                datalist.append(tem[0])
+                namelist.append(tem[1])
             if not datalist:exit(0)
         except:
             messagebox.showerror(title='Error',message='error input')
             return
-        minlen=min(len(item) for item in datalist[0])
+        minlen=min(len(item) for item in datalist)
         if minlen<36:
             messagebox.showinfo(title='info',message='too less sample was found')
             return
-        datalist[0]=list(map(lambda x:x[:minlen],datalist[0]))
+        datalist[0]=list(map(lambda x:x[:minlen],datalist))
         try:
-            ans=tool.find(tool.findrf(),datalist[0],datalist[1])
+            ans=tool.find(tool.findrf(),datalist,namelist)
         except:
             messagebox.showerror(title='Error',message='unknown calculation error')
             return
