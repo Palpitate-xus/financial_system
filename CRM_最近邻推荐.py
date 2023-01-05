@@ -6,7 +6,7 @@ conn = pymysql.connect(host="127.0.0.1",
                        port=3306,
                        user='root',
                        passwd='123456789',
-                       db='test',
+                       db='financial_system',
                        charset='utf8')
 
 mid = [] # 作为中间列表将fetchall返回的值转为列表形式
@@ -22,16 +22,19 @@ cursor = conn.cursor()
 
 def data_switch(): # 数据转换，将fetchall返回的price和idledetails转化为列表形式并返回
   global Num
-  sql = "SELECT COUNT(ID) FROM commodityinfo " # 判断数据库中一共有多少种商品类别
+  sql = "SELECT COUNT(StkCdoTrd) FROM lstkinfo " # 判断数据库中一共有多少种商品类别
   cursor.execute(sql)
   commodityNum = cursor.fetchall()
   a = list(commodityNum[0])
   Num = a[0]
   for i in range(1,Num + 1):
-    sql = "SELECT price,idleDetails FROM commodityinfo WHERE id = '%s'" % i # 根据id号返回商品价格和新旧程度
+    sql = "SELECT CsrcICNm,CsrcIcNm1 FROM lstkinfo WHERE StkCdoTrd = '%s'" % i # 根据id号返回商品价格和新旧程度
     cursor.execute(sql)
     data = cursor.fetchall()
-    mid.append(list(data[0]))
+    try:
+      mid.append(list(data[0]))
+    except:
+      pass
   for i in range(0,Num):
     PriceList.append(float(mid[i][0]))
     DetailList.append(float(mid[i][1]))
@@ -70,11 +73,12 @@ def Cal_Eucidean_distance(x): # 计算欧几里得距离并排序输出N个最�
   print(result_ID[:4])
 
 def Eucidean_final():
-  price_distance_function(int(id))
-  detail_distance_function(int(id))
-  Cal_Eucidean_distance(int(id))
+  price_distance_function(id)
+  detail_distance_function(id)
+  Cal_Eucidean_distance(id)
 
-id = input()
+# id = input()
+id = '000012'
 Eucidean_final()
 
 # 关闭游标
