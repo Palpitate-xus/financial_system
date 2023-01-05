@@ -9,10 +9,10 @@ def findrf():
 # 获取股票数据
 def fetchData(code='sh000001'):
     field_name = ak.stock_individual_info_em(symbol=code[2:8]).values[2][1]
+    print(field_name)
     stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol=code)
     data = []
     for item in stock_zh_index_daily_df.values:
-        print((item[4]-item[1]) / item[1])
         data.append((item[4] - item[1]) / item[1])  # 求日收益率
     return data, field_name
 
@@ -61,5 +61,13 @@ def find(rf,list,namelist):
     cov = np.array([[cov[i][j] * otc[i] * otc[j] for i in range(l)] for j in range(l)])
     return otc, sharp, np.sum(rep * cov) / np.sum(cov)
 
-# print(find(findrf(), [[0.02, 0.03],[0.04, 0.05]], ['test', 'new']))
+# print(find(findrf(), [[0.02, 0.03], [0.04, 0.05], [0.04, 0.05]], ['银行', '光学光电子', '汽车零部件']))
 # print(fetchData()[1])
+# 银行
+# 光学光电子
+# 汽车零部件
+# 汽车零部件
+# 互联网服务
+# 互联网服务
+# -
+# 公用事业
