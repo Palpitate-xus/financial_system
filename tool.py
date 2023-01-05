@@ -8,7 +8,7 @@ def findrf():
 
 # 获取股票数据
 def fetchData(code='sz399552'):
-    field_name = ak.stock_individual_info_em(symbol="000001").values[2][1]
+    field_name = ak.stock_individual_info_em(symbol=code[2:8]).values[2][1]
     stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol=code)
     data = []
     for item in stock_zh_index_daily_df.values:
@@ -62,3 +62,4 @@ def find(rf,list,namelist):
     return otc, sharp, np.sum(rep * cov) / np.sum(cov)
 
 print(find(findrf(), [[0.02, 0.03],[0.04, 0.05]], ['test', 'new']))
+print(fetchData()[1])
