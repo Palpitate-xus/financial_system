@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-import my
+import tool
 class service():
     def confirm():
         solve().main.transient()
@@ -45,7 +45,7 @@ class solve():
         datalist,minlen=[],800
         try:
             for code in service.exch.get(0.1,'end').split():
-                datalist.append(my.fetchData(code))
+                datalist.append(tool.fetchData(code))
             if not datalist:exit(0)
         except:
             print('illegal input!\n')
@@ -58,12 +58,12 @@ class solve():
             return
         datalist=list(map(lambda x:x[:minlen],datalist))
         try:
-            ans=my.find(my.findrf(),datalist)
+            ans=tool.find(tool.findrf(),datalist)
         except:
             print('unknown calculation fault!\n')
             self.main.destroy()
             return
-        self.otc='SharpRatio='+ans[1]+'\n'
+        self.otc='SharpRatio='+ans[1]+'\n'+'dispersity='+ans[2]+'\n'
         for w in ans[0]:
             self.otc+=w+'\n'
         show=tk.Text(self.main,font=('times',12),state='disabled')
