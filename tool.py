@@ -13,7 +13,7 @@ def fetchData(code='sh000001'):
     stock_zh_index_daily_df = ak.stock_zh_index_daily(symbol=code)
     data = []
     for item in stock_zh_index_daily_df.values:
-        data.append((item[4] - item[1]) / item[1])  # 求日收益率
+        data.append(((item[4] - item[1]) / item[1])*365)  # 求日收益率
     return data, field_name
 
 # 求余弦相似度
