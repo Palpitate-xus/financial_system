@@ -56,7 +56,7 @@ def find(rf,list,namelist):
                 sharp = nsharp
             elif np.exp((nsharp - sharp) / T) < np.random.random():
                 w[pos] -= dw
-            T *= 0.993
+            T *= 0.999
     rep = np.array([[rept(namelist[i], namelist[j]) for i in range(l)] for j in range(l)])
     cov = np.array([[cov[i][j] * otc[i] * otc[j] for i in range(l)] for j in range(l)])
     return otc, sharp, np.sum(rep * cov) / np.sum(cov)
