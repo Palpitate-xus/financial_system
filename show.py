@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog,messagebox
 import tool
-import traceback
 otc=''
 class service():
     def confirm():
@@ -23,17 +22,17 @@ class service():
         try:
             ans=tool.find(tool.findrf(),datalist,namelist)
         except:
-            traceback.print_exc()
             messagebox.showerror(title='Error',message='unknown calculation error')
             return
         global otc
         otc='SharpRatio='+str(ans[1])+'\n'+'dispersity='+str(ans[2])+'\n'
         for w in ans[0]:
             otc+=str(w)+'\n'
-        solve().main.transient()
+        solve().main.focus()
     def readfile():
         path=filedialog.askopenfilename()
-        xx=open(path,'r')
+        try:xx=open(path,'r')
+        except:return
         service.exch.delete(0.1,'end')
         codes=''
         for line in xx.readlines():
@@ -79,3 +78,13 @@ class solve():
         tk.Button(self.main,font=('times',12),text='保存到文件',command=savefile).place(x=270,y=585,width=100,height=30)
 if __name__=='__main__':
     service().main.mainloop()
+'''
+sh000001
+sh688011
+sh688071
+sh688280
+sh688258
+sh600476
+sh600870
+sh600283
+'''
