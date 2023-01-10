@@ -1,4 +1,5 @@
 import numpy as np
+import random as rd
 import akshare as ak
 import jieba
 
@@ -44,25 +45,25 @@ def find(rf,list,namelist):
     cov = np.cov(np.array(list), bias=True)
     w = np.array([1.0 for i in list])
     sharp = (np.sum(w * er) - rf * np.sum(w)) / np.sqrt(w.T.dot(cov).dot(w))
-    for i in range(l):
-        T = 2023.0
+    for i in range(4):
+        T = 20230.0
         while T>1e-14:
-            pos = np.random.randint(0,l)
-            dw = np.random.uniform(-w[pos],T)
-            w[pos] += dw
+            pos=rd.sample(range(l),l-i)
+            dw=[np.random.uniform(max(-w[p],-T),T) for p in pos]
+            for p,d in zip(pos,dw):
+                w[p]+=d
             nsharp = (np.sum(w * er) - rf * np.sum(w)) / np.sqrt(w.T.dot(cov).dot(w))
             if nsharp > sharp:
                 otc = w / np.sum(w)
                 sharp = nsharp
             elif np.exp((nsharp - sharp) / T) < np.random.random():
-                w[pos] -= dw
+                for p,d in zip(pos,dw):
+                    w[p]-=d
             T *= 0.999
     rep = np.array([[rept(namelist[i], namelist[j]) for i in range(l)] for j in range(l)])
     cov = np.array([[cov[i][j] * otc[i] * otc[j] for i in range(l)] for j in range(l)])
     return otc, sharp, np.sum(rep * cov) / np.sum(cov)
 
-# print(find(findrf(), [[0.02, 0.03], [0.04, 0.05], [0.04, 0.05]], ['银行', '光学光电子', '汽车零部件']))
-# print(fetchData()[1])
 # 银行
 # 光学光电子
 # 汽车零部件
